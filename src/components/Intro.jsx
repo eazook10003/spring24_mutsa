@@ -37,7 +37,6 @@ const Curstock = styled.li`
 const Right = styled.div`
     flex: 3;
     position: relative;
-    margin-top: 250px;
 `
 
 const Img = styled.img`
