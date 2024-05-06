@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Intro from "./components/Intro";
 import Filter from "./components/Filter";
 import Score from "./components/Score";
+import Apitest from "./components/Apitest";
+import Test from "./components/Test"
 
 const Container = styled.div`
   height: 100vh;
@@ -20,8 +22,10 @@ function App() {
   return (
     <Container>
       <Intro/>
+      <Test/>
       <Filter/>
       <Score/>
+      <Apitest/>
     </Container>
   );
 }
