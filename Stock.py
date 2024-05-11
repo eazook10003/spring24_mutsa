@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 import sys
 from flask_cors import CORS
-
+from flask import request
 
 
 app = Flask(__name__)
@@ -78,7 +78,11 @@ def scrape_stock_news(tickers):
 
 @app.route('/news', methods=['GET'])
 def get_stock_news():
-    tickers = ['AAPL', 'GOOGL', 'MSFT']    
+
+    search_type = request.args.get('searchType', 'all')
+    query = request.args.get('query', '')
+
+    tickers = ['AAPL', 'GOOGL', 'MSFT'] if search_type == 'all' else [query] if search_type == 'ticker' else []
     news_data = scrape_stock_news(tickers)
     print("news data: ",news_data)
     return jsonify({'news_data': news_data})

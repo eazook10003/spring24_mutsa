@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 
 
@@ -86,9 +86,28 @@ const NewsItem = styled.div`
   border-radius: 4px;
 `;
 
+const NewsItem_header = styled.div`
+    display: flex;
+    align-items: center;
+
+    h3 {
+        margin-right: 10px;  // h3와 p 사이의 간격
+      }
+
+`
+
+const NewsItem_title = styled.div`
+    
+
+`
+
+
 function SearchBar() {
+
   const [inputValue, setInputValue] = useState('');
   const [searchType, setSearchType] = useState('ticker'); // 검색 유형 상태 추가
+  const [data, setData] = useState(null);  // Initialize to null for loading state
+
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -100,19 +119,40 @@ function SearchBar() {
 
   const handleSubmit = () => {
     console.log('Search for:', inputValue, 'Search type:', searchType); // 검색한 입력값 함께 출력
-  };
 
-  const articles = [
-    { title: "Sample Article 1", summary: "This is a sample summary for article 1." },
-    { title: "Sample Article 2", summary: "This is a sample summary for article 2." },
-    { title: "Sample Article 3", summary: "This is a sample summary for article 3." },
-    { title: "Sample Article 4", summary: "This is a sample summary for article 4." },
-    { title: "Sample Article 5", summary: "This is a sample summary for article 5." },
-    { title: "Sample Article 6", summary: "This is a sample summary for article 6." },
-    { title: "Sample Article 7", summary: "This is a sample summary for article 7." },
-    { title: "Sample Article 8", summary: "This is a sample summary for article 8." }
+    const url = `http://127.0.0.1:5000/news?searchType=${searchType}&query=${inputValue}`;
 
-  ];
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            setData(data);  // 데이터 업데이트
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+            setData({ news_data: [] });  // 오류 시 빈 배열로 설정
+        });
+};
+
+  
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:5000/news")
+    .then(res => res.json())
+    .then(data => {
+        setData(data);
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error occurred:', error);
+        setData({ news_data: [] });  // Set to empty array in news_data in case of error
+    })
+}, []);
+
+    if (!data || !data.news_data) {
+        return <NewsItem><p>Loading...</p></NewsItem>;  // 주식 기사 데이터를 로딩중이거나, 없을 때
+    }
+
 
   return (
     <DivStyle>
@@ -134,12 +174,24 @@ function SearchBar() {
 
             <NewsContainer>
                 <NewsListContainer>
-                    {articles.map((article, index) => (
-                    <NewsItem key={index}>
-                        <h3>{article.title}</h3>
-                        <p>{article.summary}</p>
-                    </NewsItem>
-                    ))}
+                    {data.news_data.length > 0 ? (
+                        data.news_data.map((news, index) => (
+                            <NewsItem key={index}>
+                                <NewsItem_header>
+                                    <h3>{news.ticker}</h3>
+                                    <p>{news.date} - {news.time}</p>
+                                </NewsItem_header>
+                                <NewsItem_title>
+                                    <a href={news.links} target="_blank" rel="noopener noreferrer">
+                                        {news.title}
+                                    </a>
+                                    <span> - source : {news.source}</span>
+                                </NewsItem_title>
+                            </NewsItem>
+                        ))
+                    ) : (
+                        <p>No news available.</p>
+                    )}
                 </NewsListContainer>
             </NewsContainer>
         </Left>
