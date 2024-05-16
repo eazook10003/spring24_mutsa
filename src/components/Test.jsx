@@ -77,28 +77,31 @@ const NewsListContainer = styled.div`
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  height: 66.67vh;
+  overflow-y: auto;
 `;
 
 const NewsItem = styled.div`
   background: white;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 4px;
+  padding: 1.5vh;
+  margin-bottom: 1vh;
+  border-radius: 0.4vh;
+  min-height: 7.5vh;
 `;
 
 const NewsItem_header = styled.div`
     display: flex;
     align-items: center;
+    font-size: 1.5vh;
 
     h3 {
         margin-right: 10px;  // h3와 p 사이의 간격
       }
-
 `
 
 const NewsItem_title = styled.div`
-    
-
+    font-size: 1.5vh;
+    margin-top: 1vh;
 `
 
 
