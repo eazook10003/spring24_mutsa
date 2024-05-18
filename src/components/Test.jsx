@@ -51,14 +51,15 @@ const SearchStyle = styled.div`
 `;
 
 const InputStyle = styled.input`
-  width: 55%;      
+  width: 72vh;      
   padding: 10px;
-  font-size: 16px;
+  font-size: 1.5vh;
+  height: 2vh;
 `;
 
 const ButtonStyle = styled.button`
   padding: 10px 20px;  
-  font-size: 16px;   
+  font-size: 1.5vh;   
   cursor: pointer;   
   margin-left: 10px;
 `;
@@ -66,11 +67,11 @@ const ButtonStyle = styled.button`
 const SelectStyle = styled.select`
   padding: 10px;     
   margin-left: 10px;   
-  font-size: 16px;   
+  font-size: 1.5vh;   
 `;
 
 const NewsListContainer = styled.div`
-  width: 100%;
+  width: 100vh;
   max-width: 800px;
   margin-top: 20px;
   background: #2f4f4f;
@@ -87,6 +88,14 @@ const NewsItem = styled.div`
   margin-bottom: 1vh;
   border-radius: 0.4vh;
   min-height: 7.5vh;
+`;
+
+const No_News = styled.div`
+    background: white;
+    padding: 1.5vh;
+    margin-bottom: 1vh;
+    border-radius: 0.4vh;
+    min-height: 7.5vh;
 `;
 
 const NewsItem_header = styled.div`
@@ -108,7 +117,7 @@ const NewsItem_title = styled.div`
 function SearchBar() {
 
   const [inputValue, setInputValue] = useState('');
-  const [searchType, setSearchType] = useState('ticker'); // 검색 유형 상태 추가
+  const [searchType, setSearchType] = useState('today','last_7days'); // 검색 유형 상태 추가
   const [data, setData] = useState(null);  // Initialize to null for loading state
 
 
@@ -165,11 +174,11 @@ function SearchBar() {
                     type="text"
                     value={inputValue}
                     onChange={handleInputChange}
-                    placeholder="Enter stock ticker or news keyword"
+                    placeholder="Enter stock ticker."
                 />
                 <SelectStyle value={searchType} onChange={handleTypeChange}>
-                    <option value="ticker">Stock Ticker</option>
-                    <option value="news">News Articles</option>
+                    <option value="today">Today News</option>
+                    <option value="last_7days">Last 7days</option>
                     <option value="all">All</option>
                 </SelectStyle>
                 <ButtonStyle onClick={handleSubmit}>Search</ButtonStyle>
@@ -193,7 +202,9 @@ function SearchBar() {
                             </NewsItem>
                         ))
                     ) : (
+                        <No_News>
                         <p>No news available.</p>
+                        </No_News>
                     )}
                 </NewsListContainer>
             </NewsContainer>
