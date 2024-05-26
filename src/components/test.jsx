@@ -6,7 +6,8 @@ const DivStyle = styled.div`
     display: flex;
     scroll-snap-align: center;
     height: 100vh;
-        flex-direction: row;
+    background: url("./img/bg.jpeg");
+    flex-direction: row;
 `
 
 const Left = styled.div`
@@ -50,14 +51,15 @@ const SearchStyle = styled.div`
 `;
 
 const InputStyle = styled.input`
-  width: 55%;      
+  width: 72vh;      
   padding: 10px;
-  font-size: 16px;
+  font-size: 1.5vh;
+  height: 2vh;
 `;
 
 const ButtonStyle = styled.button`
   padding: 10px 20px;  
-  font-size: 16px;   
+  font-size: 1.5vh;   
   cursor: pointer;   
   margin-left: 10px;
 `;
@@ -65,57 +67,58 @@ const ButtonStyle = styled.button`
 const SelectStyle = styled.select`
   padding: 10px;     
   margin-left: 10px;   
-  font-size: 16px;   
+  font-size: 1.5vh;   
 `;
 
 const NewsListContainer = styled.div`
-  width: 100%;
-  height: 600px;
+  width: 100vh;
   max-width: 800px;
   margin-top: 20px;
   background: #2f4f4f;
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  height: 66.67vh;
+  overflow-y: auto;
 `;
 
 const NewsItem = styled.div`
   background: white;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 4px;
+  padding: 1.5vh;
+  margin-bottom: 1vh;
+  border-radius: 0.4vh;
+  min-height: 7.5vh;
 `;
 
 const No_News = styled.div`
     background: white;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    align-items: center;
-    height : 100px;
-`
+    padding: 1.5vh;
+    margin-bottom: 1vh;
+    border-radius: 0.4vh;
+    min-height: 7.5vh;
+`;
 
 const NewsItem_header = styled.div`
     display: flex;
     align-items: center;
+    font-size: 1.5vh;
 
     h3 {
         margin-right: 10px;  // h3와 p 사이의 간격
       }
-
 `
 
 const NewsItem_title = styled.div`
-    
-
+    font-size: 1.5vh;
+    margin-top: 1vh;
 `
 
 
 function SearchBar() {
 
   const [inputValue, setInputValue] = useState('');
-  const [searchType, setSearchType] = useState('today', 'last_7days'); // 검색 유형 상태 추가
-  const [data, setData] = useState(null);  // Initialize to null for loading state
+  const [searchType, setSearchType] = useState('today','last_7days'); // 검색 유형 상태 추가
+  const [data, setData] = useState(null); 
 
 
   const handleInputChange = (event) => {
@@ -154,15 +157,16 @@ function SearchBar() {
     })
     .catch(error => {
         console.error('Error occurred:', error);
-        setData({ news_data: [] });  // Set to empty array in news_data in case of error
+        setData({ news_data: [] , Average_Score: null});  // Set to empty array in news_data in case of error
     })
 }, []);
 
     if (!data || !data.news_data) {
         return <NewsItem><p>Loading...</p></NewsItem>;  // 주식 기사 데이터를 로딩중이거나, 없을 때
     }
+    console.log("console Average SCoooooooore", data.Average_Score)
 
-
+    
   return (
     <DivStyle>
         <Left>
@@ -171,7 +175,7 @@ function SearchBar() {
                     type="text"
                     value={inputValue}
                     onChange={handleInputChange}
-                    placeholder="Enter stock ticker"
+                    placeholder="Enter stock ticker."
                 />
                 <SelectStyle value={searchType} onChange={handleTypeChange}>
                     <option value="today">Today News</option>
@@ -187,7 +191,7 @@ function SearchBar() {
                         data.news_data.map((news, index) => (
                             <NewsItem key={index}>
                                 <NewsItem_header>
-                                    <h3>{news.ticker}</h3>
+                                    <h3>{news.ticker} - {data.Average_Score !== undefined ? data.Average_Score : "No Score Available"}</h3>
                                     <p>{news.date} - {news.time}</p>
                                 </NewsItem_header>
                                 <NewsItem_title>
@@ -200,7 +204,7 @@ function SearchBar() {
                         ))
                     ) : (
                         <No_News>
-                            <p>No news available.</p>
+                        <p>No news available.</p>
                         </No_News>
                     )}
                 </NewsListContainer>

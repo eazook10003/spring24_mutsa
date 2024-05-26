@@ -5,9 +5,13 @@ from datetime import datetime, timedelta
 import sys
 from flask_cors import CORS
 from flask import request
+import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import pandas as pd
 
 app = Flask(__name__)
 CORS(app)
+
 
 def scrape_stock_news(tickers, search_type):
     finviz_url = 'https://finviz.com/quote.ashx?t='
@@ -94,8 +98,25 @@ def get_stock_news():
     query = request.args.get('query', '')
     print("Heeeeeeeeeeeeeeeeeere", query)
     news_data = scrape_stock_news(query, search_type)
+
+    totalScore = 0
+    vader = SentimentIntensityAnalyzer()
+    for news in news_data:
+        scores = vader.polarity_scores(news['title'])
+        news['sentiment'] = scores
+        print("for loop score", scores)
+        totalScore += scores['compound']
+
+    if len(news_data) > 0:
+        Average_Scores = totalScore / len(news_data)
+    else:
+        Average_Scores = 0
+    print("total score print" , Average_Scores)
+    print("here scoreeeeeeeeeeeeeeee", scores)
+
     print("news data: ",news_data)
-    return jsonify({'news_data': news_data})
+
+    return jsonify({'news_data': news_data, 'Average_Score': Average_Scores})
 
 if __name__ == '__main__':
     app.run(debug=True)
