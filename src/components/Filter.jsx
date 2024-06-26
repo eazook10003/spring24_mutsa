@@ -44,6 +44,7 @@ const StatsContainer = styled.div`
     justify-content: space-between;
     width: 69%;
     margin-top: 20px;
+    height: 50%;
 `;
 
 const Tooltip = styled.div`
@@ -162,6 +163,26 @@ const ForexTr = styled.tr`
     min-height: 20px;
 `;
 
+const StatsImageContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+`;
+
+const ImageContainer = styled.div`
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -80px;
+
+    img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+    }
+`;
+
 const Filter = () => {
     const [stocks, setStocks] = useState([]);
     const [futures, setFutures] = useState([]);
@@ -174,8 +195,8 @@ const Filter = () => {
                 const response = await fetch('http://localhost:5000/stock-info');
                 const data = await response.json();
                 setStocks(data.stock_info);
-                setFutures(data.future_news_info.slice(0, 9));
-                setForex(data.forex_news_info.slice(0, 8));
+                setFutures(data.future_news_info.slice(0, 10));
+                setForex(data.forex_news_info.slice(0, 10));
                 setStats(data.stats);
             } catch (error) {
                 console.error('Error fetching stock information:', error);
@@ -197,7 +218,7 @@ const Filter = () => {
 
     return (
         <Section>
-            <Title>Stock Information</Title>
+            <Title>Stock Information - What is happening now?</Title>
             <Container>
                 <TableContainer>
                     <Table>
@@ -294,29 +315,35 @@ const Filter = () => {
                             ))}
                         </tbody>
                     </Table>
+                    
                 </SideContainer>
             </Container>
-            <StatsContainer>
-                {stats.map((stat, index) => (
-                    <StatBox key={index}>
-                        <StatLabel>
-                            <span className="positive">{stat.label_left}</span>
-                            <span className="negative">{stat.label_right}</span>
-                        </StatLabel>
-                        <StatLabel>
-                            <span className="positive">{stat.value_left}</span>
-                            <span className="negative">{stat.value_right}</span>
-                        </StatLabel>
-                        <BarContainer
-                            leftWidth={stat.value_left.split(' ')[0]}
-                            rightWidth={stat.value_right.split(' ')[0]}
-                        />
-                        <Tooltip className="tooltip">
-                            Total {stat.label_left}/{stat.label_right} issues on NYSE, Nasdaq and AMEX
-                        </Tooltip>
-                    </StatBox>
-                ))}
-            </StatsContainer>
+            <StatsImageContainer>
+                <StatsContainer>
+                    {stats.map((stat, index) => (
+                        <StatBox key={index}>
+                            <StatLabel>
+                                <span className="positive">{stat.label_left}</span>
+                                <span className="negative">{stat.label_right}</span>
+                            </StatLabel>
+                            <StatLabel>
+                                <span className="positive">{stat.value_left}</span>
+                                <span className="negative">{stat.value_right}</span>
+                            </StatLabel>
+                            <BarContainer
+                                leftWidth={stat.value_left.split(' ')[0]}
+                                rightWidth={stat.value_right.split(' ')[0]}
+                            />
+                            <Tooltip className="tooltip">
+                                Total {stat.label_left}/{stat.label_right} issues on NYSE, Nasdaq and AMEX
+                            </Tooltip>
+                        </StatBox>
+                    ))}
+                </StatsContainer>
+                <ImageContainer>
+                    <img src="./img/likelion3.png" alt="Like Lion" />
+                </ImageContainer>
+            </StatsImageContainer>
         </Section>
     );
 };
