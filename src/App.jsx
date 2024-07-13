@@ -1,9 +1,11 @@
+// App.jsx
+import React from 'react';
 import styled from "styled-components";
+import { AppProvider } from './AppContext.jsx';
 import Intro from "./components/Intro";
 import Filter from "./components/Filter";
-import Score from "./components/Score";
-import Apitest from "./components/Apitest";
-import Test from "./components/Test"
+import Test from "./components/Test";
+import Navbar from "./components/Navbar";
 
 const Container = styled.div`
   background: url("./img/bg.jpeg");
@@ -13,21 +15,33 @@ const Container = styled.div`
   overflow-y: auto;
   scrollbar-width: none;
   color: black;
-  &::-webkit-scrollbar{
+  &::-webkit-scrollbar {
     display: none;
   }
 `;
 
+const Section = styled.div`
+  height: 100vh;
+  scroll-snap-align: start;
+`;
+
 function App() {
   return (
-    <Container>
-      <Intro/>
-      <Test/>
-      <Filter/>
-      <Score/>
-      <Apitest/>
-    </Container>
+    <AppProvider>
+      <Navbar />
+      <Container>
+        <Section id="home">
+          <Intro />
+        </Section>
+        <Section id="search">
+          <Test />
+        </Section>
+        <Section id="stock">
+          <Filter />
+        </Section>
+      </Container>
+    </AppProvider>
   );
 }
 
-export default App
+export default App;

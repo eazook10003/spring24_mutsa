@@ -4,46 +4,47 @@ import styled from 'styled-components';
 const Section = styled.div`
     height: 100vh;
     scroll-snap-align: center;
-    padding: 20px;
+    padding: 5vh; /* 50px -> 5vh */
     background-color: original-background-color;
     color: white;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin-top: 5vh; /* 50px -> 5vh */
 `;
 
 const Title = styled.h1`
-    margin: 0;
-    padding: 20px 0;
+    margin-top: 2vh;
+    padding: 2vh 0; /* 20px -> 2vh */
 `;
 
 const Container = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-top: 15px;
-    gap: 20px;
+    margin-top: 2vh; /* 15px -> 1.5vh */
+    gap: 1vw; /* 20px -> 2vw */
 `;
 
 const TableContainer = styled.div`
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 1vw; /* 20px -> 2vw */
     width: 70%;
 `;
 
 const SideContainer = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 1vw; /* 20px -> 2vw */
     width: 30%;
 `;
 
 const StatsContainer = styled.div`
     display: flex;
     justify-content: space-between;
-    width: 69%;
-    margin-top: 20px;
+    width: 69.3%;
+    margin-top: 2vh; /* 20px -> 2vh */
     height: 50%;
 `;
 
@@ -54,8 +55,8 @@ const Tooltip = styled.div`
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 10px;
-    width: 250px;
+    padding: 1vh; /* 10px -> 1vh */
+    width: 25vw; /* 250px -> 25vw */
     position: absolute;
     z-index: 1;
     bottom: 125%;
@@ -77,12 +78,16 @@ const Tooltip = styled.div`
 
 const StatBox = styled.div`
     background-color: #333;
-    padding: 10px;
+    padding: 1vh; /* 10px -> 1vh */
     border-radius: 8px;
     text-align: center;
     width: 22%;
     position: relative;
     border: 2px solid white;
+    height: 11vh;
+    font-size: calc(0.8vw + 0.6vh);
+
+
 
     &:hover ${Tooltip} {
         visibility: visible;
@@ -93,7 +98,7 @@ const StatBox = styled.div`
 const StatLabel = styled.div`
     display: flex;
     justify-content: space-between;
-
+    margin-top: 1vh;
     .positive {
         color: green;
     }
@@ -105,7 +110,7 @@ const StatLabel = styled.div`
 
 const BarContainer = styled.div`
     display: flex;
-    margin-top: 5px;
+    margin-top: 0.5vh; /* 5px -> 0.5vh */
     background: linear-gradient(
         to right, 
         green ${props => props.leftWidth}, 
@@ -113,7 +118,7 @@ const BarContainer = styled.div`
         red ${props => props.leftWidth}, 
         red 100%
     );
-    height: 10px;
+    height: 1vh; /* 10px -> 1vh */
     border-radius: 10px;
     overflow: hidden;
 `;
@@ -123,21 +128,20 @@ width: 100%;
 border-collapse: separate;
 border-spacing: 0;
 color: white;
-font-size: 14px;
+font-size: calc(0.6vw + 0.6vh);
 background-color: #333;
 border: 2px solid white;
 border-radius: 8px;
 overflow: hidden;  /* 이 줄을 추가하세요 */
 `;
 
-
 const Th = styled.th`
-    padding: 4px;
+    padding: 0.4vh; /* 4px -> 0.4vh */
     background-color: #444;
 `;
 
 const Td = styled.td`
-    padding: 4px;
+    padding: 0.5vh; /* 4px -> 0.4vh */
     text-align: center;
 
     &.positive {
@@ -154,19 +158,20 @@ const Td = styled.td`
 `;
 
 const FutureTr = styled.tr`
-    height: 20px;
-    min-height: 20px;
+    height: 2vh; /* 20px -> 2vh */
+    min-height: 2vh; /* 20px -> 2vh */
 `;
 
 const ForexTr = styled.tr`
-    height: 20px;
-    min-height: 20px;
+    height: 2vh; /* 20px -> 2vh */
+    min-height: 2vh; /* 20px -> 2vh */
 `;
 
 const StatsImageContainer = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
+    height: 50vh;
 `;
 
 const ImageContainer = styled.div`
@@ -174,7 +179,7 @@ const ImageContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: -80px;
+    margin-top: -16vh; /* -80px -> -8vh */
 
     img {
         max-width: 100%;
